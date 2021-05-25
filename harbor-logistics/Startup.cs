@@ -1,8 +1,10 @@
+using harbor_logistics.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +23,9 @@ namespace harbor_logistics
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<HarborLogisticsContext>(options =>
+                    options.UseMySql(Configuration.GetConnectionString("HarborLogisticsContext"), builder => builder.MigrationsAssembly("harbor-logistics")));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
