@@ -27,6 +27,8 @@ namespace harbor_logistics
             services.AddDbContext<HarborLogisticsContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("HarborLogisticsContext"), builder => builder.MigrationsAssembly("harbor-logistics")));
 
+            services.AddScoped<SeedingService>();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -35,11 +37,12 @@ namespace harbor_logistics
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else
             {

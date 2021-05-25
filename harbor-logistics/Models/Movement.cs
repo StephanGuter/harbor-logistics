@@ -21,6 +21,15 @@ namespace harbor_logistics.Models
 
         public Movement() { }
 
+        public Movement(int id, DateTime startDate, MovementType type, Container container)
+        {
+            Id = id;
+            StartDate = startDate;
+            EndDate = default;
+            Type = type;
+            Container = container;
+        }
+
         public Movement(int id, DateTime startDate, DateTime endDate, MovementType type, Container container)
         {
             Id = id;
